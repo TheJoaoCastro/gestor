@@ -18,6 +18,10 @@ GESTOR System
     </form>
 </div>
 <div class="d-flex justify-content-center">
-    <h1>Dashboard</h1>
+    {% if perms.loja.add_produtoloja %}
+        <h1>Dashboard do Gerente</h1>
+    {% else %}
+        <h1>Dashboard do Vendedor</h1>
+    {% endif %}
 </div>
 {% endblock %}
