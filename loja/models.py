@@ -1,8 +1,7 @@
 from django.db import models
-from django.contrib.auth.models import User
 
 class Loja(models.Model):
-    id_gerente = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    id_gerente = models.IntegerField(default=0)
     endereco = models.CharField(max_length=200)
     altura = models.DecimalField(decimal_places=1, max_digits=2)
     largura = models.DecimalField(decimal_places=1, max_digits=4)
