@@ -17,8 +17,74 @@ GESTOR System
         <button type="submit" class="btn btn-outline-secondary" title="Logout">Sair</button>
     </form>
 </div>
-<div class="d-flex justify-content-center">
-    <h1>Dashboard do Gerente</h1>
-    <p>{{user.funcionario.id_loja}}</p>
+
+<div class="d-flex justify-content-center flex-column">
+    
+    <nav class="d-flex justify-content-around align-items-center mx-2 py-2 rounded">
+        <button class="btn btn-dark">
+            Editar produto
+        </button>
+        <button class="btn btn-dark">
+            Funcionários
+        </button>
+        <button class="btn btn-dark">
+            Relatórios
+        </button>
+        <button class="btn btn-dark">
+            Importar dados
+        </button>
+    </nav>
+
+    <div class="d-flex justify-content-center mt-1 px-5 py-2 flex-column conteiner">
+        <h3 class="py-2">Produtos</h3>
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Qnt. Vendas</th>
+                    <th scope="col">Qnt. Disponível</th>
+                    <th scope="col">Valor</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for produto in produtos %}
+                <tr>
+                    <td>{{produto.id_dados_produto.nome}}</td>
+                    <td>{{produto.qnt_vendas}}</td>
+                    <td>{{produto.qnt_disponivel}}</td>
+                    <td><a href="#" class="btn btn-outline-secondary">Editar</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+
 </div>
+<style>
+    .card {
+        width: 300px;
+        height: 200px;
+    }
+
+    nav .btn {
+        background-color: rgb(61, 143, 138);
+        color: black;
+    }
+
+    .conteiner {
+        border: none;
+        border-top: 2px solid gray;
+    }
+
+    td .btn {
+        color: rgb(61, 143, 138);
+    }
+
+    td .btn:hover {
+        color: rgb(61, 143, 138);
+    }
+</style>
 {% endblock %}

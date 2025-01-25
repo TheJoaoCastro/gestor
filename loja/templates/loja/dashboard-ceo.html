@@ -17,7 +17,91 @@ GESTOR System
         <button type="submit" class="btn btn-outline-secondary" title="Logout">Sair</button>
     </form>
 </div>
-<div class="d-flex justify-content-center">
-    <h1>Dashboard do CEO</h1>
+<div class="d-flex justify-content-center flex-column">
+  
+    <nav class="d-flex justify-content-around align-items-center mx-2 py-2 rounded">
+        <button class="btn btn-dark">
+            Adicionar produto   
+        </button>
+        <button class="btn btn-dark">
+            Editar produto   
+        </button>
+        <button class="btn btn-dark">
+            Nova demanda   
+        </button>
+        <button class="btn btn-dark">
+            Funcionários 
+        </button>
+        <button class="btn btn-dark">
+            Relatórios   
+        </button>
+        <button class="btn btn-dark">
+            Importar dados   
+        </button>
+    </nav>
+
+    <div class="d-flex flex-wrap conteiner">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Loja 1</h4>
+                <div class="d-flex justify-content-center">
+                    <img src="https://images.vexels.com/media/users/3/131136/isolated/preview/4c711c7ec7a01da4a8adf53684a13209-crescente-grafico-de-linha-multicolor.png?w=360" alt="" width="150px">
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Loja 2</h4>
+                <div class="d-flex justify-content-center">
+                    <img src="https://images.vexels.com/media/users/3/131136/isolated/preview/4c711c7ec7a01da4a8adf53684a13209-crescente-grafico-de-linha-multicolor.png?w=360" alt="" width="150px">
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Loja 3</h4>
+                <div class="d-flex justify-content-center">
+                    <img src="https://images.vexels.com/media/users/3/131136/isolated/preview/4c711c7ec7a01da4a8adf53684a13209-crescente-grafico-de-linha-multicolor.png?w=360" alt="" width="150px">
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Loja 4</h4>
+                <div class="d-flex justify-content-center">
+                    <img src="https://images.vexels.com/media/users/3/131136/isolated/preview/4c711c7ec7a01da4a8adf53684a13209-crescente-grafico-de-linha-multicolor.png?w=360" alt="" width="150px">
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Loja 5</h4>
+                <div class="d-flex justify-content-center">
+                    <img src="https://images.vexels.com/media/users/3/131136/isolated/preview/4c711c7ec7a01da4a8adf53684a13209-crescente-grafico-de-linha-multicolor.png?w=360" alt="" width="150px">
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
 </div>
+<style>
+    .card {
+        width: 320px;
+        height: 270px;
+    }
+    nav .btn {
+        background-color: rgb(61, 143, 138);
+        color: black;
+    }
+    .conteiner {
+        padding: 1em;
+        padding-top: 2em;
+        border: none;
+        border-top: 2px solid gray;
+        gap: 2em;
+    }
+</style>
 {% endblock %}
