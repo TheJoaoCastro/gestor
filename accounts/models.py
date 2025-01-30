@@ -14,3 +14,12 @@ class Funcionario(AbstractUser):
 
     def __str__(self):
         return self.email
+    
+# class Gerente(Funcionario):
+#     class Meta:
+#         proxy = True
+
+#     objects = GerenteManager()
+    
+#     def __str__(self):
+#         return self.first_name

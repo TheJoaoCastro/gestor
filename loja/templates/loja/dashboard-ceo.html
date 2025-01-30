@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends './bases/base-ceo.html' %}
 
 {% load static %}
 
@@ -7,38 +7,7 @@ GESTOR System
 {% endblock %}
 
 {% block content %}
-<div class="navbar d-flex justify-content-between align-items-start mx-1">
-    <div class="d-flex align-items-end flex-row p-1">
-        <img src="{% static 'images/logo.webp' %}" alt="" height="40px">
-        <h4 style="color: rgba(95, 229, 220, 0.66); margin-left: .2em;">ESTOR</h4>
-    </div>
-    <form action="/accounts/logout/" method="post">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-outline-secondary" title="Logout">Sair</button>
-    </form>
-</div>
 <div class="d-flex justify-content-center flex-column">
-  
-    <nav class="d-flex justify-content-around align-items-center mx-2 py-2 rounded">
-        <button class="btn btn-dark">
-            Adicionar produto   
-        </button>
-        <button class="btn btn-dark">
-            Editar produto   
-        </button>
-        <button class="btn btn-dark">
-            Nova demanda   
-        </button>
-        <button class="btn btn-dark">
-            Funcionários 
-        </button>
-        <button class="btn btn-dark">
-            Relatórios   
-        </button>
-        <button class="btn btn-dark">
-            Importar dados   
-        </button>
-    </nav>
 
     <div class="d-flex flex-wrap conteiner">
         <div class="card">
@@ -87,21 +56,4 @@ GESTOR System
     </div>
 
 </div>
-<style>
-    .card {
-        width: 320px;
-        height: 270px;
-    }
-    nav .btn {
-        background-color: rgb(61, 143, 138);
-        color: black;
-    }
-    .conteiner {
-        padding: 1em;
-        padding-top: 2em;
-        border: none;
-        border-top: 2px solid gray;
-        gap: 2em;
-    }
-</style>
 {% endblock %}

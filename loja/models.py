@@ -2,11 +2,11 @@ from django.db import models
 from accounts.models import Funcionario
 
 class Loja(models.Model):
-    id_gerente = models.ForeignKey(Funcionario, on_delete=models.DO_NOTHING)
+    gerente = models.ForeignKey(Funcionario, on_delete=models.DO_NOTHING)
     endereco = models.CharField(max_length=200)
-    altura = models.DecimalField(decimal_places=1, max_digits=2)
     largura = models.DecimalField(decimal_places=1, max_digits=4)
     profundidade = models.DecimalField(decimal_places=1, max_digits=4)
+    tipo_organizacao = models.IntegerField(max_length=2, default=1)
     
     def __str__(self):
         return 'Loja ' + str(self.id) + ', ' + self.endereco

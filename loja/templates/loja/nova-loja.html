@@ -1,0 +1,102 @@
+{% extends './bases/base-ceo.html' %}
+
+{% load static %}
+
+{% block title %}
+GESTOR System
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center flex-column">
+
+    <section class="d-flex flex-row justify-content-around px-2 pt-4">
+        <div class="d-flex justify-content-center align-items-center formxy mt-3">
+            <img src="{% static 'images/dimensao.png' %}" alt="" style="width: 150px; margin-right: 3.3em;">
+            <form action="/nova-loja/" method="post" class="d-flex flex-column">
+                {% csrf_token %}
+                <div class="form-group pt-1">
+                    <label for="select">Gerente:</label>
+                    <select name="select" id="select-gerente" class="form-control">
+                        <option value selected>---------</option>
+                        {% for gerente in gerentes %}
+                        <option value="{{gerente.id}}">{{gerente.first_name}}</option>
+                        {% endfor %}
+                    </select>
+                    {{form}}
+                </div>
+        </div>
+        <div class="d-flex justify-content-center align-items-center flex-column mt-3">
+            <h5 class="my-0">Selecione a melhor forma de organização: </h5>
+            <div class="d-flex flex-row">
+                <div class="d-flex flex-column align-items-center">
+                    <img src="{% static 'images/opcao_1.png' %}" alt="" style="width: 150px;">
+                    <span>1</span>
+                    <input type="radio" name="organizacao" value="opcao1" style="width: 20px;">
+                </div>
+                <div class="d-flex flex-column align-items-center">
+                    <img src="{% static 'images/opcao_2.png' %}" alt="" style="width: 150px;">
+                    <span>2</span>
+                    <input type="radio" name="organizacao" value="opcao2" style="width: 20px;">
+                </div>
+            </div>
+            <div id="aviso-aproveitamento" class="d-flex pt-5 flex-column">
+            </div>
+        </div>
+    </section>
+    <div class="d-flex justify-content-center my-3">
+        <button type="submit" class="btn btn-dark" id="btn-cadastrar-loja" hidden>Cadastrar loja</button>
+    </div>
+    </form>
+</div>
+<script>
+
+    // Seleciona gerente
+    let gerente = document.getElementById("select-gerente");
+    gerente.onchange = function(e) {
+        document.getElementById('id_gerente').value = e.target.value;
+    }
+
+    // Radio opção de organização + cálculo de pallets
+    let opcao = document.querySelectorAll('input[name="organizacao"]');
+    for (let i = 0; i < opcao.length; i++) {
+        opcao[i].addEventListener("change", function () {
+            let val = this.value;
+
+            if (!isNaN(parseFloat(document.getElementById('id_largura').value)) || !isNaN(parseFloat(document.getElementById('id_profundidade').value))) {
+                document.getElementById('btn-cadastrar-loja').removeAttribute("hidden");
+                let x = parseFloat(document.getElementById('id_largura').value);
+                let y = parseFloat(document.getElementById('id_profundidade').value);
+                let aproveitamento;
+                if (val == 'opcao1') {
+
+                    document.getElementById('id_tipo_organizacao').value = 1;
+
+                    total_linhas_pallets = parseInt((y - 1) / 1.2);
+                    total_colunas_pallets = ((x / 1.8) - 1) == 0 ? 1 : parseInt(x / 1.8) == 1 ? 1 : parseInt((x / 1.8) - 1) >= 1 ? parseInt((x / 1.8) - 1) : 0;
+
+                    area_pallets = 1.2 * 0.8 * total_linhas_pallets * total_colunas_pallets;
+                    area_total = x * y;
+                    aproveitamento = parseInt(area_pallets / area_total * 100);
+                } else {
+
+                    document.getElementById('id_tipo_organizacao').value = 2;
+
+                    total_linhas_pallets = parseInt((y - 1) / 0.8);
+                    total_colunas_pallets = ((x / 2.2) - 1) == 0 ? 1 : parseInt(x / 2.2) == 1 ? 1 : parseInt((x / 2.2) - 1) >= 1 ? parseInt((x / 2.2) - 1) : 0;
+
+                    area_pallets = 1.2 * 0.8 * total_linhas_pallets * total_colunas_pallets;
+                    area_total = x * y;
+                    aproveitamento = parseInt(area_pallets / area_total * 100);
+                };
+                let texto = document.getElementById('aviso-aproveitamento');
+                texto.innerHTML = `<p style="max-width: 500px; font-size: .6em;" class="d-flex flex-wrap">Com essa organização dos pallets, o aproveitamento será de ${aproveitamento}% do espaço total.</p><p style="font-size: .6em;">Será um total de ${total_colunas_pallets * total_linhas_pallets} pallets</p>`;
+            } else {
+                let texto = document.getElementById('aviso-aproveitamento');
+                texto.innerHTML = `<p style="max-width: 500px; font-size: .6em;" class="d-flex flex-wrap">Está faltando os valores!</p>`;
+            }
+
+        });
+    };
+
+</script>
+{% endblock %}

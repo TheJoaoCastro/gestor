@@ -1,0 +1,65 @@
+.card {
+    width: 320px;
+    height: 270px;
+}
+
+div .btn-dark {
+    font-size: .9em;
+    background-color: rgb(61, 143, 138);
+    color: black;
+}
+
+.conteiner {
+    padding: 1em;
+    padding-top: 2em;
+    border: none;
+    border-top: 2px solid gray;
+    gap: 1.5em;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.conteiner {
+    padding: 1em;
+    padding-top: 2em;
+    border: none;
+    border-top: 2px solid gray;
+    gap: 1.5em;
+}
+
+input {
+    width: 250px;
+    height: 25px;
+}
+
+label {
+    margin-top: .6em;
+    color: rgb(203, 203, 203);
+}
+
+.btn-nova-loja {
+    margin-top: .6em;
+}
+
+.form-group {
+    font-size: .9em;
+}
+
+section {
+    border: none;
+    border-top: 2px solid gray;
+}
+
+.formxy {
+    border: none;
+    border-right: 2px solid gray;
+    padding-right: 3.4em;
+}
+
+form .btn-outline-secondary {
+    font-size: .9em;
+    border: none;
+}
