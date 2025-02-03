@@ -1,0 +1,40 @@
+{% extends '../bases/base-gerente.html' %}
+
+{% load static %}
+
+{% block title %}
+GESTOR System
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center flex-column">
+
+    <div class="d-flex justify-content-center mt-1 px-5 py-2 flex-column conteiner">
+        <h3 class="py-2">Produtos</h3>
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Qnt. Vendas</th>
+                    <th scope="col">Qnt. Disponível</th>
+                    <th scope="col">Valor</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for produto in produtos %}
+                <tr>
+                    <td>{{produto.id_dados_produto.nome}}</td>
+                    <td>{{produto.qnt_vendas}}</td>
+                    <td>{{produto.qnt_disponivel}}</td>
+                    <td><a href="editar-produto/{{produto.id}}" class="btn btn-outline-secondary">Editar</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+
+</div>
+{% endblock %}

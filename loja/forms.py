@@ -1,6 +1,7 @@
 from django import forms
 from .models import Loja
 from accounts.models import Funcionario
+from .models import ProdutoLoja
         
 class LojaForm(forms.ModelForm):
     class Meta:
@@ -22,3 +23,17 @@ class LojaForm(forms.ModelForm):
         def __init__(self,*args,**kwargs):
             super().__init__(*args,**kwargs)
             self.fields['gerente'].queryset = Funcionario.objects.filter(groups__name='GERENTE')
+
+class ProdutoLojaForm(forms.ModelForm):
+    class Meta:
+        model = ProdutoLoja
+        exclude = ['id_dados_produto', 'qnt_disponivel', 'qnt_vendas', 'id_loja']
+    
+        labels = {
+            'valor': 'Novo valor'
+        }
+    
+    widgets = {
+            'valor' : forms.NumberInput(attrs={'class':'form-control', 'placeholder': 'Tamanho em metros (X)'}),
+    }
+        
