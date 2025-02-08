@@ -1,7 +1,6 @@
 from django.db import models
 from accounts.models import Funcionario
 from django.core.validators import MaxValueValidator, MinValueValidator
-import uuid as uuid_lib
 
 class Loja(models.Model):
     gerente = models.ForeignKey(Funcionario, on_delete=models.DO_NOTHING)
