@@ -63,3 +63,7 @@ form .btn-outline-secondary {
     font-size: .9em;
     border: none;
 }
+
+.form-control {
+    outline: none;
+}

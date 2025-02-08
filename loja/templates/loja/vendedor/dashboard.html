@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends '../bases/base-vendedor.html' %}
 
 {% load static %}
 
@@ -7,35 +7,18 @@ GESTOR System
 {% endblock %}
 
 {% block content %}
-<div class="navbar d-flex justify-content-between align-items-start mx-1">
-    <div class="d-flex align-items-end flex-row p-1">
-        <img src="{% static 'images/logo.webp' %}" alt="" height="40px">
-        <h4 style="color: rgba(95, 229, 220, 0.66); margin-left: .2em;">ESTOR</h4>
-    </div>
-    <form action="/accounts/logout/" method="post">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-outline-secondary" title="Logout">Sair</button>
-    </form>
-</div>
-
 <div class="d-flex justify-content-center flex-column">
     
-    <nav class="d-flex justify-content-around align-items-center mt-2 pt-2 rounded">
-        <button class="btn btn-dark">
-            Novo pedido
-        </button>
-    </nav>
-
     <div class="d-flex justify-content-center mt-1 px-5 py-2 flex-column conteiner">
-        <h3 class="py-2">Produtos</h3>
+        <h3 class="pt-5" style="color: rgb(78, 184, 184);">Produtos</h3>
         <table class="table">
 
             <thead>
                 <tr>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Qnt. Vendas</th>
-                    <th scope="col">Qnt. Disponível</th>
-                    <th scope="col">Última venda</th>
+                    <th scope="col" class="text-secondary">Nome</th>
+                    <th scope="col" class="text-secondary">Qnt. Vendas</th>
+                    <th scope="col" class="text-secondary">Qnt. Disponível</th>
+                    <th scope="col" class="text-secondary">Última venda</th>
                 </tr>
             </thead>
 
@@ -54,23 +37,5 @@ GESTOR System
     </div>
 
 </div>
-<style>
-    .card {
-        width: 300px;
-        height: 200px;
-    }
 
-    nav .btn {
-        background-color: rgb(61, 143, 138);
-        color: black;
-    }
-
-    td .btn {
-        color: rgb(61, 143, 138);
-    }
-
-    td .btn:hover {
-        color: rgb(61, 143, 138);
-    }
-</style>
 {% endblock %}
