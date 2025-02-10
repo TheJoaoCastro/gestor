@@ -1,0 +1,43 @@
+{% extends '../bases/base-ceo.html' %}
+
+{% load static %}
+
+{% block title %}
+GESTOR System
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center flex-column">
+    
+    <div class="d-flex justify-content-center mt-1 px-5 py-2 flex-column conteiner">
+        <h3 class="pt-5" style="color: rgb(78, 184, 184);">Produtos</h3>
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th scope="col" class="text-secondary">Nome</th>
+                    <th scope="col" class="text-secondary text-dark">-</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for produto in produtos %}
+                <tr>
+                    <td>{{produto.nome}}</td>
+                    <td class="d-flex justify-content-end">
+                        <a href="/editar-dados-produto/{{produto.id}}" class="btn btn-dark">Editar</a>
+                        <form action="/deletar-dados-produto/{{produto.id}}/" method="post">
+                            {% csrf_token %}
+                            <button onclick="return confirm('Certeza que deseja deletar o produto {{produto.nome}}?')" type="submit" class="btn btn-outline-secondary" title="Sair">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}

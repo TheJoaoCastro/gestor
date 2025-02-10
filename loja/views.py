@@ -24,8 +24,9 @@ def novaLoja(request):
         form = LojaForm(request.POST)
         if form.is_valid:
             form.save()
-            messages.success(request, "Nova loja cadastrada com sucesso, verifique sua dashboard")
+            messages.success(request, "Nova loja cadastrada com sucesso! Verifique-a em sua dashboard.")
             return redirect('/')
+        messages.success(request, "Erro ao cadastrar nova loja, tente novamente mais tarde.")
         return redirect('/nova-loja/')
     
     form = LojaForm()
@@ -33,20 +34,63 @@ def novaLoja(request):
     context = {'form': form, 'gerentes': gerentes}
     return render(request, 'loja/ceo/nova-loja.html', context)
 
+def cadastrarDadosProduto(request):
+    
+    if request.method == 'POST':
+        form = DadosProdutoForm(request.POST)
+        if form.is_valid:
+            form.save()
+            messages.success(request, "Novo produto cadastrado com sucesso!")
+            return redirect('/')
+        messages.success(request, "Erro ao cadastrar novo produto, tente novamente mais tarde.")
+        return redirect('/cadastrar-dados-produto')
+    
+    form = DadosProdutoForm
+    context = {'form': form}
+    return render(request, 'loja/ceo/cadastrar-dados-produto.html', context)
+
+
+def editarProdutos(request):
+    produtos = DadosProduto.objects.all()
+    context = {'produtos': produtos}
+    return render(request, 'loja/ceo/editar-dados-produtos.html', context)
+
+def editarDadosProduto(request, pk):
+    
+    produto = get_object_or_404(DadosProduto, id=pk)
+    if request.method == 'POST':
+        form = DadosProdutoForm(request.POST or None, instance=produto)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Dados do produto editados.")
+            return redirect('/')
+        messages.success(request, "Erro ao editar os dados do produto, tente novamente mais tarde.")
+        return redirect('/editar-dados-produto/')
+    
+    form = DadosProdutoForm(instance=produto)
+    produto = DadosProduto.objects.get(id=pk)
+    context = {'form': form, 'produto': produto}
+    return render(request, 'loja/ceo/editar-dados-produto.html', context)
+
+def deletarDadosProduto(request, pk):
+    DadosProduto.objects.filter(id=pk).delete()
+    messages.success(request, "Produto deletado com sucesso!")
+    return redirect('/editar-dados-produtos/')
+
 # Gerente
 def editarProduto(request, pk):
     
     produto = get_object_or_404(ProdutoLoja, id=pk)
-    print(produto)
     if request.method == 'POST':
-        form = ProdutoLojaForm(request.POST or None, instance=produto)
+        form = ProdutoLojaEditForm(request.POST or None, instance=produto)
         if form.is_valid():
             form.save()
-            messages.success(request, "Produto editado")
+            messages.success(request, "Produto editado.")
             return redirect('/')
+        messages.success(request, "Erro ao editar o produto, tente novamente mais tarde.")
         return redirect('/nova-loja/')
     
-    form = ProdutoLojaForm()
+    form = ProdutoLojaEditForm()
     produto = ProdutoLoja.objects.get(id=pk)
     porcentagem_vendas = produto.qnt_vendas/(produto.qnt_disponivel+produto.qnt_vendas)
     context = {'form': form, 'produto': produto, 'porcentagem': porcentagem_vendas}
@@ -71,6 +115,7 @@ def novoPedido(request):
             return HttpResponse("OK")
         
         except json.JSONDecodeError:
+            messages.success(request, "Erro ao cadastrar o pedido, tente novamente mais tarde.")
             return BadRequest("Bad request")
     
     produtos = ProdutoLoja.objects.filter(id_loja__id=request.user.id_loja)

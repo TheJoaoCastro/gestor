@@ -1,0 +1,22 @@
+{% extends '../bases/base-ceo.html' %}
+
+{% load static %}
+
+{% block title %}
+GESTOR System
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center flex-column">
+
+    <div class="d-flex align-items-center mt-1 py-2 flex-column conteiner">
+        <h2 class="pt-2">Novo produto</h2>
+        <form method="post" class="d-flex flex-column form-group">
+            {% csrf_token %}
+            {{form}}
+            <button type="submit" class="btn btn-secondary mt-3">Adicionar</button>
+        </form>
+    </div>
+
+</div>
+{% endblock %}

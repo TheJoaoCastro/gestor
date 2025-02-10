@@ -34,8 +34,8 @@ class DadosProduto(models.Model):
 class ProdutoLoja(models.Model):
     id_loja = models.ForeignKey(Loja, on_delete=models.CASCADE)
     valor = models.DecimalField(decimal_places=2, max_digits=6)
-    qnt_disponivel = models.IntegerField()
-    qnt_vendas = models.IntegerField()
+    qnt_disponivel = models.IntegerField(default=0)
+    qnt_vendas = models.IntegerField(default=0)
     ultima_venda = models.DateField(auto_now=True)
     id_dados_produto = models.ForeignKey(DadosProduto, on_delete=models.CASCADE)
     

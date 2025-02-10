@@ -30,27 +30,29 @@
                 <h4 style="color: rgba(95, 229, 220, 0.66); margin-left: .2em;">ESTOR</h4>
             </div>
         </a>
-        <button class="btn btn-dark">
-            Adicionar produto
-        </button>
-        <button class="btn btn-dark">
-            Editar produto
-        </button>
+
         <button class="btn btn-dark">
             Nova demanda
         </button>
+
+        <a href="/cadastrar-dados-produto/" class="btn btn-dark">Cadastrar produto</a>
         
+        <a href="/editar-dados-produtos/" class="btn btn-dark">Editar produtos</a>
+
         <a href="/nova-loja/" class="btn btn-dark">Nova loja</a>
         
         <button class="btn btn-dark">
             Funcionários
         </button>
+
         <button class="btn btn-dark">
             Relatórios
         </button>
+
         <button class="btn btn-dark">
             Importar dados
         </button>
+
         <form action="/accounts/logout/" method="post">
             {% csrf_token %}
             <button type="submit" class="btn btn-outline-secondary" title="Sair"><i class="bi bi-box-arrow-right"></i></button>
