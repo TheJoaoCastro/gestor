@@ -66,3 +66,37 @@ class DadosProdutoForm(forms.ModelForm):
             'profundidade' : forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Ex.: 100'}),
             'fator_empilhamento' : forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Max. de caixas'}),
         }
+        
+class FuncionarioForm(forms.ModelForm):
+    class Meta:
+        model = Funcionario
+        fields = ['first_name', 'last_name','email', 'password']
+        labels = {
+            'email' : 'Email corporativo:',
+            'password' : 'Senha de primeiro acesso:',
+            'first_name' : 'Nome:',
+            'last_name' : 'Sobrenome:',
+        }
+        widgets = {
+            'email' : forms.TextInput(attrs={'class':'form-control'}),
+            'password' : forms.TextInput(attrs={'class':'form-control'}),
+            'first_name' : forms.TextInput(attrs={'class':'form-control'}),
+            'last_name' : forms.TextInput(attrs={'class':'form-control'}),
+        }
+        
+class FuncionarioEditForm(forms.ModelForm):
+    class Meta:
+        model = Funcionario
+        fields = ['first_name', 'last_name','email', 'password']
+        labels = {
+            'email' : 'Email:',
+            'password' : 'Senha:',
+            'first_name' : 'Nome:',
+            'last_name' : 'Sobrenome:',
+        }
+        widgets = {
+            'email' : forms.TextInput(attrs={'class':'form-control'}),
+            'password' : forms.TextInput(attrs={'class':'form-control'}),
+            'first_name' : forms.TextInput(attrs={'class':'form-control'}),
+            'last_name' : forms.TextInput(attrs={'class':'form-control'}),
+        }

@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
+from django.contrib.auth.models import Group
 from django.core.exceptions import BadRequest
 from .models import ProdutoLoja, Funcionario
 from .forms import *
@@ -22,7 +23,7 @@ def novaLoja(request):
     
     if request.method == 'POST':
         form = LojaForm(request.POST)
-        if form.is_valid:
+        if form.is_valid():
             form.save()
             messages.success(request, "Nova loja cadastrada com sucesso! Verifique-a em sua dashboard.")
             return redirect('/')
@@ -38,14 +39,14 @@ def cadastrarDadosProduto(request):
     
     if request.method == 'POST':
         form = DadosProdutoForm(request.POST)
-        if form.is_valid:
+        if form.is_valid():
             form.save()
             messages.success(request, "Novo produto cadastrado com sucesso!")
             return redirect('/')
         messages.success(request, "Erro ao cadastrar novo produto, tente novamente mais tarde.")
         return redirect('/cadastrar-dados-produto')
     
-    form = DadosProdutoForm
+    form = DadosProdutoForm()
     context = {'form': form}
     return render(request, 'loja/ceo/cadastrar-dados-produto.html', context)
 
@@ -68,7 +69,6 @@ def editarDadosProduto(request, pk):
         return redirect('/editar-dados-produto/')
     
     form = DadosProdutoForm(instance=produto)
-    produto = DadosProduto.objects.get(id=pk)
     context = {'form': form, 'produto': produto}
     return render(request, 'loja/ceo/editar-dados-produto.html', context)
 
@@ -76,6 +76,81 @@ def deletarDadosProduto(request, pk):
     DadosProduto.objects.filter(id=pk).delete()
     messages.success(request, "Produto deletado com sucesso!")
     return redirect('/editar-dados-produtos/')
+
+def cadastrarFuncionario(request):
+    
+    if request.method == 'POST':
+        form = FuncionarioForm(request.POST)
+        if form.is_valid():
+            form.save()
+            funcionario = get_object_or_404(Funcionario, email=request.POST.get('email'))
+            funcionario.set_password(request.POST['password'])
+            funcionario.save()
+            if (request.POST.get('cargo') == 'vendedor'):
+                group = Group.objects.get(name='VENDEDOR') 
+                group.user_set.add(funcionario)
+            elif (request.POST.get('cargo') == 'gerente'):
+                group = Group.objects.get(name='GERENTE') 
+                group.user_set.add(funcionario)
+            else:
+                messages.success(request, "Não foi possível adicionar o funcionario ao grupo selecionado.")
+                return redirect('funcionarios')
+            messages.success(request, "Novo funcionário cadastrado com sucesso!")
+            return redirect('funcionarios')
+        messages.success(request, "Erro ao cadastrar novo produto, tente novamente mais tarde.")
+        return redirect('cadastrar-funcionario')
+    
+    form = FuncionarioForm()
+    context = {'form': form}
+    return render(request, 'loja/ceo/cadastrar-funcionario.html', context)
+
+
+def funcionarios(request):
+    ids = [request.user.id, 1]
+    funcionarios = Funcionario.objects.filter(is_active=True).exclude(id__in=ids)
+    context = {'funcionarios': funcionarios}
+    return render(request, 'loja/ceo/funcionarios.html', context)
+
+def editarFuncionario(request, pk):
+    
+    funcionario = get_object_or_404(Funcionario, id=pk)
+    if request.method == 'POST':
+        form = FuncionarioEditForm(request.POST or None, instance=funcionario)
+        if form.is_valid():
+            user = Funcionario.objects.get(id=pk)
+            if(user.password == request.POST['password']):
+                form.save()
+            else:
+                form.save()
+                funcionario.set_password(request.POST['password'])
+                funcionario.save()
+            if (request.POST.get('cargo') == 'vendedor'):
+                group = Group.objects.get(name='VENDEDOR') 
+                Group.objects.get(name='GERENTE').user_set.remove(funcionario)
+                group.user_set.add(funcionario)
+            elif (request.POST.get('cargo') == 'gerente'):
+                group = Group.objects.get(name='GERENTE') 
+                Group.objects.get(name='VENDEDOR').user_set.remove(funcionario)
+                group.user_set.add(funcionario)
+            else:
+                messages.success(request, "Não foi possível adicionar o funcionario ao grupo selecionado.")
+                return redirect('funcionarios')
+            messages.success(request, "Funcionario editado.")
+            return redirect('funcionarios')
+        messages.success(request, "Erro ao editar o funcionario, tente novamente mais tarde.")
+        return redirect('funcionarios')
+    
+    form = FuncionarioEditForm(instance=funcionario)
+    cargo = funcionario.groups.all()[0].name
+    context = {'form': form, 'funcionario': funcionario, 'cargo': cargo}
+    return render(request, 'loja/ceo/editar-funcionario.html', context)
+
+def desativarFuncionario(request, pk):
+    funcionario = Funcionario.objects.get(id=pk)
+    funcionario.is_active = False
+    funcionario.save()
+    messages.success(request, 'Funcionário '+funcionario.first_name+' foi desabilitado. Caso necessite voltar o acesso, contate o TI para reabilitar-lo.')
+    return redirect('funcionarios')
 
 # Gerente
 def editarProduto(request, pk):

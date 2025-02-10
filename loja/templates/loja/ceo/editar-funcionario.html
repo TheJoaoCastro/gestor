@@ -1,0 +1,31 @@
+{% extends '../bases/base-ceo.html' %}
+
+{% load static %}
+
+{% block title %}
+GESTOR System
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center flex-column">
+
+    <div class="d-flex align-items-center mt-1 py-2 flex-column conteiner">
+        <h2 class="pt-2">Editar funcionário</h2>
+        <form method="post" class="d-flex flex-column form-group px-5">
+            {% csrf_token %}
+            <div style="width: 30vw;">{{form}}</div>
+            <select name="cargo" class="form-control mt-3">
+                {% if cargo == "GERENTE" %}
+                <option value="gerente" selected="selected">Gerente</option>
+                <option value="vendedor">Vendedor</option>
+                {% else %}
+                <option value="vendedor" selected="selected">Vendedor</option>
+                <option value="gerente">Gerente</option>
+                {% endif %}
+            </select>
+            <button type="submit" class="btn btn-outline-info mt-3">Editar</button>
+        </form>
+    </div>
+
+</div>
+{% endblock %}
