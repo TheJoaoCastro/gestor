@@ -19,6 +19,10 @@ urlpatterns = [
     
     #Gerente
     path('editar-produto/<int:pk>/', editarProduto, name='editar-produto'),
+    path('cadastrar-funcionario-gerente/', cadastrarFuncionarioGerente, name='cadastrar-funcionario-gerente'),
+    path('funcionarios-gerente/', funcionariosGerente, name='funcionarios-gerente'),
+    path('editar-dados-funcionario-gerente/<int:pk>/', editarFuncionarioGerente, name='editar-dados-funcionario-gerente'),
+    path('desativar-funcionario-gerente/<int:pk>/', desativarFuncionarioGerente, name='desativar-funcionario-gerente'),
     
     #Vendedor
     path('novo-pedido/', novoPedido, name='novo-pedido'),
