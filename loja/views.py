@@ -63,7 +63,7 @@ def distribuicaoAutomatica(request):
                         produto = ProdutoLoja.objects.filter(id_loja=loja.id, id_dados_produto=id)[0]
                     except:
                         idDadosProduto = DadosProduto.objects.get(id=id)
-                        produto = ProdutoLoja.objects.create(id_loja=loja, id_dados_produto=idDadosProduto, valor=ProdutoLoja.objects.filter(id_dados_produto=id)[0].valor)
+                        produto = ProdutoLoja.objects.create(id_loja=loja, id_dados_produto=idDadosProduto, valor=99.99)
 
                     try:
                         dadosMesPassado = FatorProdutoMes.objects.get(id_produto=produto.id).latest('created_at')
@@ -314,8 +314,12 @@ def novoPedido(request):
             for id in pedido:
                 qnt = pedido[id]
                 produto = ProdutoLoja.objects.get(id=id)
+                
+                if (produto.qnt_disponivel == 0):
+                    raise Exception("Sem estoque.")
+                
                 produto.qnt_vendas = int(produto.qnt_vendas) + int(qnt)
-                produto.qnt_disponivel = int(produto.qnt_disponivel) - int(qnt)
+                produto.qnt_disponivel = 0 if (int(produto.qnt_disponivel) - int(qnt)) <= 0 else (int(produto.qnt_disponivel) - int(qnt))
                 produto.save()
             
             messages.success(request, "Pedido realizado!")
