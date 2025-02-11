@@ -1,12 +1,23 @@
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.contrib.auth.models import Group
 from django.core.exceptions import BadRequest
-from .models import ProdutoLoja, Funcionario
+from .models import *
 from .forms import *
 from django.contrib import messages
 import json
+from datetime import datetime
+
 
 def dashboard(request):
+    
+    if (datetime.now().day == 28):
+        produtosLoja = ProdutoLoja.objects.all()
+        for produto in produtosLoja:
+            try:
+                FatorProdutoMes.objects.create(id_produto=produto, valor_produto_mes=produto.valor, fator=produto.qnt_vendas/produto.qnt_disponivel)
+            except:
+                pass
+            
     if request.user.has_perm("loja.delete_loja"):
         return render(request, 'loja/ceo/dashboard.html')
     elif request.user.has_perm("loja.change_loja"):
@@ -19,6 +30,62 @@ def dashboard(request):
         return render(request, 'loja/vendedor/dashboard.html', context)
 
 # CEO
+def novaDemanda(request):
+    
+    demandas = Demandas.objects.all()
+    qntProdutos = []
+    
+    for demanda in demandas:
+        lote = demanda.lote
+        lote = lote.replace("'",'"')
+        qntProdutos.append(json.loads(lote))
+    
+    context = {'demandas': demandas, 'qntProdutos': qntProdutos}
+    return render(request, 'loja/ceo/nova-demanda.html', context)
+
+def distribuicaoAutomatica(request):
+    
+    if request.method == 'POST':
+        
+        try:
+            lote = json.loads(request.body)
+            lojas = Loja.objects.all()
+            print(type(lote.items()))
+            
+            for id in lote:
+                qnt = int(lote[id])
+                demandaLojaSemFator = qnt / len(lojas)
+                for loja in lojas:
+                    
+                    try:
+                        produto = ProdutoLoja.objects.filter(id_loja=loja.id, id_dados_produto=id)[0]
+                    except:
+                        idDadosProduto = DadosProduto.objects.get(id=id)
+                        produto = ProdutoLoja.objects.create(id_loja=loja, id_dados_produto=idDadosProduto, valor=ProdutoLoja.objects.filter(id_dados_produto=id)[0].valor)
+
+                    try:
+                        dadosMesPassado = FatorProdutoMes.objects.get(id_produto=produto.id).latest('created_at')
+                        fator = dadosMesPassado.fator
+                    except:
+                        fator = 1
+                        
+                    demandaLojaComfator = demandaLojaSemFator * fator
+                    produto.qnt_disponivel = int(produto.qnt_disponivel) + int(demandaLojaComfator)
+                    produto.save()
+            Demandas.objects.create(lote=lote)
+            messages.success(request, "Distribuição de lote realizada!")
+            return HttpResponse("OK")
+        
+        except json.JSONDecodeError:
+            messages.success(request, "Erro ao distribuir o lote, tente novamente mais tarde.")
+            return BadRequest("Bad request")
+    
+    lojas = Loja.objects.all()
+    produtos = DadosProduto.objects.all()
+    context = {'produtos': produtos}
+    return render(request, 'loja/ceo/distribuicao-automatica.html',context)
+
+
 def novaLoja(request):
     
     if request.method == 'POST':

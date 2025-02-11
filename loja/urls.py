@@ -17,6 +17,9 @@ urlpatterns = [
     path('editar-dados-funcionario/<int:pk>/', editarFuncionario, name='editar-dados-funcionario'),
     path('desativar-funcionario/<int:pk>/', desativarFuncionario, name='desativar-funcionario'),
     
+    path('nova-demanda/', novaDemanda, name='nova-demanda'),
+    path('distribuicao-automatica/', distribuicaoAutomatica, name='distribuicao-automatica'),
+    
     #Gerente
     path('editar-produto/<int:pk>/', editarProduto, name='editar-produto'),
     path('cadastrar-funcionario-gerente/', cadastrarFuncionarioGerente, name='cadastrar-funcionario-gerente'),

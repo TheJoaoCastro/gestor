@@ -50,3 +50,7 @@ class FatorProdutoMes(models.Model):
     
     def __str__(self):
         return 'Fator ' + self.id_produto.id_dados_produto.nome + ', loja ' + self.id_produto.id_loja.id + ': ' + self.fator
+    
+class Demandas(models.Model):
+    lote = models.TextField()
+    created_at = models.DateField(auto_now_add=True, null=False, blank=False)

@@ -1,0 +1,83 @@
+{% extends '../bases/base-ceo.html' %}
+
+{% load static %}
+
+{% block title %}
+GESTOR System
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center flex-column">
+    <div class="d-flex justify-content-between px-5 conteiner mt-1">
+        <div class="card mt-5">
+            <a href="/distribuicao-automatica/">
+                <div class="card-body">
+                    <h4 class="card-title justify-content-center d-flex text-secondary">Distribuição Automática</h4>
+                    <div class="d-flex justify-content-center flex-wrap">
+                        <p class="text-muted mt-4" style="text-align: justify;">A distribuição automática seleciona o
+                            lote
+                            de produtos do mês passado como referência, usando os fatores de venda de cada produto,
+                            podendo
+                            aumentar ou diminuir a quantidade dos mesmos.</p>
+                        <p class="text-muted">Ex.: 200 total, 180 vendas, fator 0.9</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="card mt-5">
+            <a href="/distribuicao-manual/">
+                <div class="card-body">
+                    <h4 class="card-title justify-content-center d-flex text-secondary">Distribuição Manual </h4>
+                    <div class="d-flex justify-content-center">
+                        <p class="text-muted mt-4" style="text-align: justify;">A distribuição manual você seleciona os
+                            fatores de venda de cada produto, podendo deixar a distribuição normalizada (Fator 1.0) sem
+                            diminuição ou aumento de lote.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="card mt-5">
+            <a href="/acrescentar-manualmente/">
+                <div class="card-body">
+                    <h4 class="card-title justify-content-center d-flex text-secondary">Acrescentar Manualmente</h4>
+                    <div class="d-flex justify-content-center">
+                        <p class="text-muted mt-4" style="text-align: justify;">A opção de acrescentar manualmente,
+                            poderá
+                            adicionar unidades do produto a cada loja, tendo maior controle sobre suprir a falta de
+                            produto
+                            em apenas uma loja por exemplo.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+    </div>
+    <div class="d-flex flex-column justify-content-center px-5 pt-4 mt-5" style="border-top: 2px solid gray;">
+        <h2>Pedidos recentes</h2>
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th scope="col" class="text-secondary">Data</th>
+                    <th scope="col" class="text-secondary text-dark">-</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for demanda in demandas %}
+                    {% for qnt in qntProdutos %}
+                    <tr>
+                        <td>{{demanda.created_at}}</td>
+                        <td class="d-flex justify-content-end">
+                            <p>Quantidade: {{qnt}}</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+
+</div>
+{% endblock %}

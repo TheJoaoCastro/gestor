@@ -124,6 +124,59 @@ function verPedido() {
     });
 }
 
+function verDemanda() {
+
+    let todosProdutos = document.querySelectorAll(".recomendacao")
+
+    document.querySelector("#main").innerHTML =
+        `
+    <div class="d-flex justify-content-center mt-1 px-5 py-2 flex-column conteiner" id="conteiner">
+    
+    <div class="d-flex justify-content-between align-items-center">
+        <button class="btn btn-outline-secondary mt-5 px-3 py-2" onclick="voltarPagina()">Voltar</button>
+        <button class="btn btn-dark mt-5 px-3 py-2" onclick="enviarDemanda()">Enviar</button>
+    </div>
+
+    <div id="recomendacoes">
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th scope="col" class="text-secondary">Nome</th>
+                    <th scope="col" class="text-secondary">Qnt. Disponível</th>
+                    <th scope="col" class="text-dark">-</th>
+                </tr>
+            </thead>
+
+
+            <tbody>
+                <!-- forEach no pedido para acrescentar as rows -->
+            </tbody>
+
+        </table>
+    </div>
+    `;
+
+    todosProdutos.forEach(td => {
+        
+        tr = td.parentNode
+        
+        if (tr.hidden) {
+
+            input = td.children[1]
+            value = input.value
+            input.setAttribute("value", value)
+
+            button = td.children[0]
+            button.innerHTML = "Atualizar"
+
+            console.log(td.innerHTML)
+
+            document.getElementsByTagName("tbody")[0].innerHTML += td.parentNode.innerHTML;
+        }
+    });
+}
+
 function voltarPagina() {
     document.querySelector("#main").innerHTML = paginaAnterior
 }
@@ -144,6 +197,27 @@ async function enviarPedido() {
 
     if (res.status == 200) {
         window.location.href = "http://localhost:8000"
+    } else {
+        alert("Erro ao enviar, tente novamente mais tarde")
+    }
+}
+
+async function enviarDemanda() {
+
+    let pedidoJSON = JSON.stringify(Object.fromEntries(pedido));
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+    const request = new Request("http://localhost:8000/distribuicao-automatica/", {
+        headers: { 'X-CSRFToken': csrftoken },
+        method: "POST",
+        body: pedidoJSON
+    });
+
+    const res = await fetch(request);
+    console.log(typeof res.status);
+
+    if (res.status == 200) {
+        window.location.href = "http://localhost:8000/nova-demanda"
     } else {
         alert("Erro ao enviar, tente novamente mais tarde")
     }
