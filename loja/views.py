@@ -329,6 +329,6 @@ def novoPedido(request):
             messages.success(request, "Erro ao cadastrar o pedido, tente novamente mais tarde.")
             return BadRequest("Bad request")
     
-    produtos = ProdutoLoja.objects.filter(id_loja__id=request.user.id_loja)
+    produtos = ProdutoLoja.objects.filter(id_loja__id=request.user.id_loja, qnt_disponivel__gt=0)
     context = {'produtos': produtos}
     return render(request, 'loja/vendedor/novo-pedido.html', context)
