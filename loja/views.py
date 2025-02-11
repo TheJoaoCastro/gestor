@@ -6,7 +6,7 @@ from .forms import *
 from django.contrib import messages
 import json
 from datetime import datetime
-
+import pywhatkit as kit
 
 def dashboard(request):
     
@@ -19,7 +19,9 @@ def dashboard(request):
                 pass
             
     if request.user.has_perm("loja.delete_loja"):
-        return render(request, 'loja/ceo/dashboard.html')
+        lojas = Loja.objects.all()
+        context = {'lojas': lojas}
+        return render(request, 'loja/ceo/dashboard.html', context)
     elif request.user.has_perm("loja.change_loja"):
         produtos = ProdutoLoja.objects.filter(id_loja__id=request.user.id_loja)
         context = {'produtos': produtos}
@@ -72,7 +74,13 @@ def distribuicaoAutomatica(request):
                     demandaLojaComfator = demandaLojaSemFator * fator
                     produto.qnt_disponivel = int(produto.qnt_disponivel) + int(demandaLojaComfator)
                     produto.save()
+                    
             Demandas.objects.create(lote=lote)
+            
+            grupo = "Hp0xxkmRlU3CljOUFaST3e"
+            mensagem = "Novo lote adicionado pelo CEO, verifique em sua dashboard!"
+            kit.sendwhatmsg_to_group_instantly(grupo, mensagem)
+            
             messages.success(request, "Distribuição de lote realizada!")
             return HttpResponse("OK")
         

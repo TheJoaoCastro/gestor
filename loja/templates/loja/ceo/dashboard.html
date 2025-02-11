@@ -10,49 +10,16 @@ GESTOR System
 <div class="d-flex justify-content-center flex-column">
 
     <div class="d-flex flex-wrap conteiner">
+        {% for loja in lojas %}
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Loja 1</h4>
+                <h4 class="card-title">Loja {{ loja.id }}</h4>
                 <div class="d-flex justify-content-center">
                     <img src="https://images.vexels.com/media/users/3/131136/isolated/preview/4c711c7ec7a01da4a8adf53684a13209-crescente-grafico-de-linha-multicolor.png?w=360" alt="" width="150px">
                 </div>
             </div>
         </div>
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Loja 2</h4>
-                <div class="d-flex justify-content-center">
-                    <img src="https://images.vexels.com/media/users/3/131136/isolated/preview/4c711c7ec7a01da4a8adf53684a13209-crescente-grafico-de-linha-multicolor.png?w=360" alt="" width="150px">
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Loja 3</h4>
-                <div class="d-flex justify-content-center">
-                    <img src="https://images.vexels.com/media/users/3/131136/isolated/preview/4c711c7ec7a01da4a8adf53684a13209-crescente-grafico-de-linha-multicolor.png?w=360" alt="" width="150px">
-                </div>
-            </div>
-        </div>
-        
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Loja 4</h4>
-                <div class="d-flex justify-content-center">
-                    <img src="https://images.vexels.com/media/users/3/131136/isolated/preview/4c711c7ec7a01da4a8adf53684a13209-crescente-grafico-de-linha-multicolor.png?w=360" alt="" width="150px">
-                </div>
-            </div>
-        </div>
-        
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Loja 5</h4>
-                <div class="d-flex justify-content-center">
-                    <img src="https://images.vexels.com/media/users/3/131136/isolated/preview/4c711c7ec7a01da4a8adf53684a13209-crescente-grafico-de-linha-multicolor.png?w=360" alt="" width="150px">
-                </div>
-            </div>
-        </div>
-        
+        {% endfor %}
     </div>
 
 </div>

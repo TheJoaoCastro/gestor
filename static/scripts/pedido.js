@@ -204,6 +204,8 @@ async function enviarPedido() {
 
 async function enviarDemanda() {
 
+    alert("Requisição enviada, aguarde o redirecionamento.")
+
     let pedidoJSON = JSON.stringify(Object.fromEntries(pedido));
     const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 

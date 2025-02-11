@@ -1,0 +1,40 @@
+Date: 11/2/2025
+Time: 19:0
+Phone Number: +5538991004278
+Message: Hello from Python! This is an instant WhatsApp message.
+--------------------
+Date: 11/2/2025
+Time: 19:1
+Phone Number: +5538991004278
+Message: Hello from Python! This is an instant WhatsApp message.
+--------------------
+Date: 11/2/2025
+Time: 19:4
+Phone Number: +5538991004278
+Message: Teste, galiba abilag
+--------------------
+Date: 11/2/2025
+Time: 19:4
+Phone Number: +5538991004278
+Message: Teste, galiba abilag
+--------------------
+Date: 11/2/2025
+Time: 19:5
+Group ID: Grupu
+Message: Teste, galiba abilag
+--------------------
+Date: 11/2/2025
+Time: 19:8
+Group ID: HtMcqiHhcMp9Q6QnQfqlPf
+Message: Teste, galiba abilag
+--------------------
+Date: 11/2/2025
+Time: 19:12
+Group ID: HtMcqiHhcMp9Q6QnQfqlPf
+Message: Teste, galiba abilag
+--------------------
+Date: 11/2/2025
+Time: 19:14
+Group ID: HtMcqiHhcMp9Q6QnQfqlPf
+Message: Teste, galiba abilag
+--------------------
