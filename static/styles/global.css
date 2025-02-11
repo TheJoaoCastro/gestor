@@ -9,14 +9,6 @@ div .btn-dark {
     color: black;
 }
 
-.conteiner {
-    padding: 1em;
-    padding-top: 2em;
-    border: none;
-    border-top: 2px solid gray;
-    gap: 1.5em;
-}
-
 a {
     text-decoration: none;
     color: black;
@@ -55,7 +47,6 @@ section {
 
 .formxy {
     border: none;
-    border-right: 2px solid gray;
     padding-right: 3.4em;
 }
 

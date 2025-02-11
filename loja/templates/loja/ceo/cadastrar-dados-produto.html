@@ -9,12 +9,12 @@ GESTOR System
 {% block content %}
 <div class="d-flex justify-content-center flex-column">
 
-    <div class="d-flex align-items-center mt-1 py-2 flex-column conteiner">
-        <h2 class="pt-2">Novo produto</h2>
-        <form method="post" class="d-flex flex-column form-group">
+    <div class="d-flex align-items-center mt-1 py-2 flex-column">
+        <h2 class="py-3">Novo produto</h2>
+        <form method="post" class="d-flex flex-column form-group" style="margin-top: 0">
             {% csrf_token %}
-            {{form}}
-            <button type="submit" class="btn btn-secondary mt-3">Adicionar</button>
+            <div style="width: 30vw;">{{form}}</div>
+            <button type="submit" class="btn btn-outline-info mt-3">Adicionar</button>
         </form>
     </div>
 

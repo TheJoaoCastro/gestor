@@ -25,7 +25,7 @@ GESTOR System
                 <tr>
                     <td>{{produto.nome}}</td>
                     <td class="d-flex justify-content-end">
-                        <a href="/editar-dados-produto/{{produto.id}}" class="btn btn-dark">Editar</a>
+                        <a href="/editar-dados-produto/{{produto.id}}" class="btn btn-outline-secondary">Editar</a>
                         <form action="/deletar-dados-produto/{{produto.id}}/" method="post">
                             {% csrf_token %}
                             <button onclick="return confirm('Certeza que deseja deletar o produto {{produto.nome}}?')" type="submit" class="btn btn-outline-secondary" title="Sair">Excluir</button>
