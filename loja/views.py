@@ -52,11 +52,11 @@ def distribuicaoAutomatica(request):
         try:
             lote = json.loads(request.body)
             lojas = Loja.objects.all()
-            print(type(lote.items()))
             
             for id in lote:
                 qnt = int(lote[id])
                 demandaLojaSemFator = qnt / len(lojas)
+                
                 for loja in lojas:
                     
                     try:
@@ -77,9 +77,9 @@ def distribuicaoAutomatica(request):
                     
             Demandas.objects.create(lote=lote)
             
-            grupo = "Hp0xxkmRlU3CljOUFaST3e"
-            mensagem = "Novo lote adicionado pelo CEO, verifique em sua dashboard!"
-            kit.sendwhatmsg_to_group_instantly(grupo, mensagem)
+            # grupo = ""
+            # mensagem = "Novo lote adicionado pelo CEO, verifique em sua dashboard!"
+            # kit.sendwhatmsg_to_group_instantly(grupo, mensagem)
             
             messages.success(request, "Distribuição de lote realizada!")
             return HttpResponse("OK")
@@ -310,14 +310,18 @@ def novoPedido(request):
         
         try:
             pedido = json.loads(request.body)
-                      
+            
             for id in pedido:
-                qnt = pedido[id]
+                qnt = int(pedido[id])
                 produto = ProdutoLoja.objects.get(id=id)
                 
                 if (produto.qnt_disponivel == 0 or qnt > produto.qnt_disponivel):
                     raise Exception("Sem estoque.")
+                      
+            for id in pedido:
                 
+                qnt = int(pedido[id])
+                produto = ProdutoLoja.objects.get(id=id)
                 produto.qnt_vendas = int(produto.qnt_vendas) + int(qnt)
                 produto.qnt_disponivel = 0 if (int(produto.qnt_disponivel) - int(qnt)) <= 0 else (int(produto.qnt_disponivel) - int(qnt))
                 produto.save()
