@@ -315,7 +315,7 @@ def novoPedido(request):
                 qnt = pedido[id]
                 produto = ProdutoLoja.objects.get(id=id)
                 
-                if (produto.qnt_disponivel == 0):
+                if (produto.qnt_disponivel == 0 or qnt > produto.qnt_disponivel):
                     raise Exception("Sem estoque.")
                 
                 produto.qnt_vendas = int(produto.qnt_vendas) + int(qnt)
